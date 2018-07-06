@@ -1,0 +1,38 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  max-width: 600px;
+  padding: 20px;
+  color: white;
+  margin: auto;
+}
+
+.App-title {
+  font-size: 4.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+.AddItem-input {
+  width: 500px;
+  margin: auto;
+}
+.todo-wrapper {
+  margin: 20px auto 20px auto;
+  width: 600px;
+  min-width: 600px;
+  min-height: 700px;
+  border: 3px solid #222;
+}
+.List-element {
+  text-align:left;
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
