@@ -10,9 +10,16 @@ class App extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.handleComplete = this.handleComplete.bind(this);
 
   }
+  handleRemove() {
 
+  }
+  handleComplete(){
+
+  }
   handleClick(event){
     //event.preventDefault();
     console.log("Value in handleClick " + this.state.userInput)
@@ -39,7 +46,7 @@ class App extends Component {
           <p className="App-intro">
             <AddItem listState={this.state.list} handleChange={this.handleChange.bind(this)} handleClick={this.handleClick.bind(this)}></AddItem>
           </p>
-          <List listState={this.state.list}></List>
+          <List handleRemove={this.handleRemove.bind(this)} handleComplete={this.handleComplete.bind(this)} listState={this.state.list}></List>
         </div>
       </div>
     );
@@ -75,10 +82,25 @@ class List extends React.Component {
 
   }
 }
+class RemoveButton extends React.Component {
+  render() {
+    return (
+      <button className="Remove-button">X</button>
+    );
+  }
+}
+class CompleteButton extends React.Component {
+  render() {
+    return (
+      <button className="Compelte-button">&#10003;</button>
+    );
+  }
+}
+
 class ListItem extends React.Component {
   render() {
     return (
-      <li className="List-element">{this.props.element}</li>
+      <li className="List-element" key={this.props.element}> <CompleteButton></CompleteButton><RemoveButton></RemoveButton> {this.props.element}</li>
     );
   }
 }

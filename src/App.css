@@ -30,7 +30,13 @@
   border: 3px solid #222;
 }
 .List-element {
+  width: 500px;
   text-align:left;
+  margin: auto;
+}
+.Remove-button {
+  position: relative;
+
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
