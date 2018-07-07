@@ -20,8 +20,11 @@ class App extends Component {
       list: this.state.list
     });
   }
-  handleComplete(){
-
+  handleComplete(value){
+    this.state.list[this.state.list.indexOf(value)].complete = true;
+    this.setState({
+      list: this.state.list
+    })
   }
   handleClick(event){
     //event.preventDefault();
@@ -78,7 +81,7 @@ class List extends React.Component {
     return (
       <div className="list-div">
         <ul>
-          {this.props.listState.map(x => <ListItem handleChange={this.props.handleChange} handleRemove={this.props.handleRemove} element={x.text}></ListItem>)}
+          {this.props.listState.map(x => <ListItem handleComplete={this.props.handleComplete} handleChange={this.props.handleChange} handleRemove={this.props.handleRemove} element={x}></ListItem>)}
         </ul>
       </div>
     );
@@ -102,18 +105,32 @@ class RemoveButton extends React.Component {
   }
 }
 class CompleteButton extends React.Component {
+  constructor(props){
+    super(props);
+    this.onComplete = this.onComplete.bind(this);
+  }
+  onComplete(event){
+    const value = event.target.value;
+    console.log(value);
+    this.props.handleComplete(value);
+  }
   render() {
     return (
-      <button className="Compelte-button" onClick={this.props.handleComplete}>&#10003;</button>
+      <button className="Compelte-button" value={this.props.value} onClick={this.onComplete}>&#10003;</button>
     );
   }
 }
-
 class ListItem extends React.Component {
   render() {
-    return (
-      <li className="List-element" > <CompleteButton></CompleteButton><RemoveButton handleRemove={this.props.handleRemove} value={this.props.element}></RemoveButton> {this.props.element}</li>
-    );
+    if(this.props.element.complete){
+      return (
+        <li className="List-element" style={{textDecoration: 'line-through'}}> <CompleteButton handleComplete={this.props.handleComplete} value={this.props.element}></CompleteButton><RemoveButton handleRemove={this.props.handleRemove} value={this.props.element}></RemoveButton> {this.props.element.text}</li>
+      );
+    }else {
+      return (
+        <li className="List-element"> <CompleteButton handleComplete={this.props.handleComplete} value={this.props.element}></CompleteButton><RemoveButton handleRemove={this.props.handleRemove} value={this.props.element}></RemoveButton> {this.props.element.text}</li>
+      );
+    }
   }
 }
 export default App;
