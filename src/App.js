@@ -5,7 +5,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: ['ABC', 'DEF', 'GHI'],
+      list: [],
       userInput: ''
     }
     this.handleClick = this.handleClick.bind(this);
@@ -27,7 +27,7 @@ class App extends Component {
     //event.preventDefault();
     console.log("Value in handleClick " + this.state.userInput)
     this.setState ({
-      list: this.state.list.concat(this.state.userInput)
+      list: this.state.list.concat({complete: false, text: this.state.userInput,})
     });
     console.log("I Am handling the CLICK");
     console.log(this.state.list);
@@ -78,7 +78,7 @@ class List extends React.Component {
     return (
       <div className="list-div">
         <ul>
-          {this.props.listState.map(x => <ListItem handleChange={this.props.handleChange} handleRemove={this.props.handleRemove} element={x}></ListItem>)}
+          {this.props.listState.map(x => <ListItem handleChange={this.props.handleChange} handleRemove={this.props.handleRemove} element={x.text}></ListItem>)}
         </ul>
       </div>
     );
