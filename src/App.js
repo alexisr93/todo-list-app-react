@@ -15,16 +15,24 @@ class App extends Component {
 
   }
   handleRemove(value) {
+    console.log("The value to be REMOVED is: " + JSON.stringify(value));
+
     this.state.list.splice(this.state.list.indexOf(value), 1)
     this.setState ({
       list: this.state.list
     });
   }
   handleComplete(value){
-    this.state.list[this.state.list.indexOf(value)].complete = true;
+    console.log("The value is to be marked Complete is: " + JSON.stringify(value));
+    const listCopy = this.state.list.slice();
+    const index = listCopy.indexOf(value);
+    const thing = listCopy[index];
+    if (thing.length > 0) {
+      console.log(thing.complelte);
+    }
     this.setState({
-      list: this.state.list
-    })
+      list: listCopy
+  })
   }
   handleClick(event){
     //event.preventDefault();
@@ -95,7 +103,7 @@ class RemoveButton extends React.Component {
   }
   onRemove(event){
     const value = event.target.value;
-    console.log(value);
+    console.log("This is removed " + value.text);
     this.props.handleRemove(value);
   }
   render() {
@@ -108,15 +116,16 @@ class CompleteButton extends React.Component {
   constructor(props){
     super(props);
     this.onComplete = this.onComplete.bind(this);
+    this.handleComplete = this.props.handleComplete.bind(this);
   }
   onComplete(event){
     const value = event.target.value;
-    console.log(value);
-    this.props.handleComplete(value);
+    console.log("This is the pre value " + value.text);
+    this.handleComplete(value);
   }
   render() {
     return (
-      <button className="Compelte-button" value={this.props.value} onClick={this.onComplete}>&#10003;</button>
+      <button className="Complete-button" value={this.props.value} onClick={this.onComplete}>&#10003;</button>
     );
   }
 }
