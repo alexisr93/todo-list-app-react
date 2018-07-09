@@ -37,7 +37,7 @@ handleComplete(value){
   var newList = this.state.list.slice();
   newList.map(item => {
     if(item.id === value){
-      item.complete = true;
+      item.complete = !item.complete;
     }
     return item;
   }
