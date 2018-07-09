@@ -16,71 +16,82 @@ class App extends Component {
   }
   handleRemove(value) {
     console.log("The value to be REMOVED is: " + value);
-
-    this.state.list.splice(this.state.list.indexOf(value.id), 1)
-    console.log("Thing thing " + this.state.list.id.indexOf(value));
-    this.setState ({
-      list: this.state.list
-    });
-  }
-  handleComplete(value){
-    console.log("The value is to be marked Complete is: " + JSON.stringify(value));
     var newList = this.state.list.slice();
-    console.log("Print Stuff in handleComplete " + value);
-    newList[newList.indexOf(value)].complete = 'true';
-    console.log(JSON.stringify(newList[1]));
-    console.log(JSON.stringify(newList));
-
-    this.setState({
-      list: newList
-    });
-  }
-  handleClick(event){
-    //event.preventDefault();
-    console.log("Value in handleClick " + this.state.userInput)
-
-    var object = {
-      id: Date.now(),
-      complete: 'false',
-      text: this.state.userInput
+    var temp;
+    newList.map(item => {
+      if(item.id === value){
+        temp = item;
+      }
+      return item;
     }
+  );
+  console.log("Thing thing " + this.state.list.indexOf(temp));
 
-    this.setState ({
-      list: this.state.list.concat(object)
-    });
-    console.log("I Am handling the CLICK");
-    console.log(this.state.list);
+  this.state.list.splice(this.state.list.indexOf(temp), 1);
+  this.setState ({
+    list: this.state.list
+  });
+}
+handleComplete(value){
+  console.log("The value is to be marked Complete is: " + value);
+  var newList = this.state.list.slice();
+  newList.map(item => {
+    if(item.id === value){
+      item.complete = true;
+    }
+    return item;
   }
-  handleChange(value){
-    this.setState ({
-      userInput: value
-    });
-    console.log("I Am handling the CHANGE");
-    console.log(value);
+);
+this.setState({
+  list: newList
+});
+}
+handleClick(event){
+  //event.preventDefault();
+  console.log("Value in handleClick " + this.state.userInput)
+
+  var object = {
+    id: Date.now(),
+    complete: false,
+    text: this.state.userInput
   }
-  render() {
-    return (
-      <div className="App">
-        <div className="todo-wrapper">
-          <header className="App-header">
-            <h1 className="App-title">Todo List</h1>
-          </header>
-          <p className="App-intro">
-            <AddItem listState={this.state.list}
-              handleChange={this.handleChange.bind(this)}
-              handleClick={this.handleClick.bind(this)}>
 
-            </AddItem>
-          </p>
-          <List handleRemove={this.handleRemove.bind(this)}
-            handleComplete={this.handleComplete.bind(this)}
-            listState={this.state.list}>
+  this.setState ({
+    list: this.state.list.concat(object)
+  });
+  console.log("I Am handling the CLICK");
+  console.log(this.state.list);
+}
+handleChange(value){
+  this.setState ({
+    userInput: value
+  });
+  console.log("I Am handling the CHANGE");
+  console.log(value);
+}
+render() {
+  return (
+    <div className="App">
+      <div className="todo-wrapper">
+        <header className="App-header">
+          <h1 className="App-title">Todo List</h1>
+        </header>
+        <p className="App-intro">
+          <AddItem listState={this.state.list}
+            handleChange={this.handleChange.bind(this)}
+            handleClick={this.handleClick.bind(this)}>
 
-          </List>
-        </div>
+          </AddItem>
+        </p>
+        <List handleRemove={this.handleRemove.bind(this)}
+          handleComplete={this.handleComplete.bind(this)}
+          listState={this.state.list}>
+
+        </List>
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 class AddItem extends React.Component {
   constructor(props){
@@ -123,7 +134,7 @@ class List extends React.Component {
       this.onRemove = this.onRemove.bind(this);
     }
     onRemove(event){
-      var value = JSON.stringify(this.props.value.id);
+      var value = this.props.value.id;
       this.props.handleRemove(value);
     }
     render() {
@@ -138,7 +149,7 @@ class List extends React.Component {
       this.onComplete = this.onComplete.bind(this);
     }
     onComplete(event){
-      var value = JSON.stringify(this.props.value.id);
+      var value = this.props.value.id;
       this.props.handleComplete(value);
     }
     render() {
@@ -149,9 +160,9 @@ class List extends React.Component {
   }
   class ListItem extends React.Component {
     render() {
-      if(this.props.element.complete === 'true'){
+      if(this.props.element.complete === true){
         return (
-          <li className="List-element" style={{textDecoration: 'line-through'}}>
+          <li className="List-element" style={{color: 'red', textDecoration: 'line-through'}}>
             <CompleteButton
               handleComplete={this.props.handleComplete}
               value={this.props.element}>
