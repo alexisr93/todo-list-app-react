@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import Tooltip from '@material-ui/core/Tooltip';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+
 
 class App extends Component {
   constructor(props) {
@@ -15,7 +23,6 @@ class App extends Component {
 
   }
   handleRemove(value) {
-    console.log("The value to be REMOVED is: " + value);
     var newList = this.state.list.slice();
     var temp;
     newList.map(item => {
@@ -25,7 +32,6 @@ class App extends Component {
       return item;
     }
   );
-  console.log("Thing thing " + this.state.list.indexOf(temp));
 
   this.state.list.splice(this.state.list.indexOf(temp), 1);
   this.setState ({
@@ -33,7 +39,6 @@ class App extends Component {
   });
 }
 handleComplete(value){
-  console.log("The value is to be marked Complete is: " + value);
   var newList = this.state.list.slice();
   newList.map(item => {
     if(item.id === value){
@@ -47,27 +52,19 @@ this.setState({
 });
 }
 handleClick(event){
-  //event.preventDefault();
-  console.log("Value in handleClick " + this.state.userInput)
-
   var object = {
     id: Date.now(),
     complete: false,
     text: this.state.userInput
   }
-
   this.setState ({
     list: this.state.list.concat(object)
   });
-  console.log("I Am handling the CLICK");
-  console.log(this.state.list);
 }
 handleChange(value){
   this.setState ({
     userInput: value
   });
-  console.log("I Am handling the CHANGE");
-  console.log(value);
 }
 render() {
   return (
@@ -105,8 +102,8 @@ class AddItem extends React.Component {
   render(){
     return (
       <div className="Add-item" onChange={this.onValueChange}>
-        <input type='text' className="AddItem-input"></input>
-        <button onClick={this.props.handleClick}>Add</button>
+        <TextField className="AddItem-input"></TextField>
+        <Button variant="outlined" onClick={this.props.handleClick}>Add</Button>
       </div>
     );
   }
@@ -139,7 +136,11 @@ class List extends React.Component {
     }
     render() {
       return (
-        <button className="Remove-button" value={this.props.value} onClick={this.onRemove}>X</button>
+        <Tooltip id="tooltip-icon" title="Delete">
+          <IconButton className="Remove-button" value={this.props.value} onClick={this.onRemove}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       );
     }
   }
@@ -154,7 +155,7 @@ class List extends React.Component {
     }
     render() {
       return (
-        <button className="Complete-button" value={this.props.value.id} onClick={this.onComplete}>&#10003;</button>
+        <Checkbox color="black" className="Complete-Button" value={this.props.value.id} onClick={this.onComplete}></Checkbox>
       );
     }
   }
@@ -162,7 +163,7 @@ class List extends React.Component {
     render() {
       if(this.props.element.complete === true){
         return (
-          <li className="List-element" style={{color: 'red', textDecoration: 'line-through'}}>
+          <li className="List-element" style={{textDecoration: 'line-through'}}>
             <CompleteButton
               handleComplete={this.props.handleComplete}
               value={this.props.element}>
