@@ -15,10 +15,10 @@ class App extends Component {
 
   }
   handleRemove(value) {
-    console.log("The value to be REMOVED is: " + JSON.stringify(value));
+    console.log("The value to be REMOVED is: " + value);
 
     this.state.list.splice(this.state.list.indexOf(value.id), 1)
-    console.log("Thing thing " + this.state.list.indexOf(value.id));
+    console.log("Thing thing " + this.state.list.id.indexOf(value));
     this.setState ({
       list: this.state.list
     });
@@ -123,8 +123,7 @@ class List extends React.Component {
       this.onRemove = this.onRemove.bind(this);
     }
     onRemove(event){
-      var value = event.target.value;
-      console.log("This is removed " + value.text);
+      var value = JSON.stringify(this.props.value.id);
       this.props.handleRemove(value);
     }
     render() {
@@ -139,12 +138,12 @@ class List extends React.Component {
       this.onComplete = this.onComplete.bind(this);
     }
     onComplete(event){
-      var value = JSON.stringify(event.target.value.id);
+      var value = JSON.stringify(this.props.value.id);
       this.props.handleComplete(value);
     }
     render() {
       return (
-        <button className="Complete-button" value={this.props.value} onClick={this.onComplete}>&#10003;</button>
+        <button className="Complete-button" value={this.props.value.id} onClick={this.onComplete}>&#10003;</button>
       );
     }
   }
