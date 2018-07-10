@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 
 
@@ -77,13 +78,11 @@ render() {
           <AddItem listState={this.state.list}
             handleChange={this.handleChange.bind(this)}
             handleClick={this.handleClick.bind(this)}>
-
           </AddItem>
         </p>
         <List handleRemove={this.handleRemove.bind(this)}
           handleComplete={this.handleComplete.bind(this)}
           listState={this.state.list}>
-
         </List>
       </div>
     </div>
@@ -103,7 +102,11 @@ class AddItem extends React.Component {
     return (
       <div className="Add-item" onChange={this.onValueChange}>
         <TextField className="AddItem-input"></TextField>
-        <Button variant="outlined" onClick={this.props.handleClick}>Add</Button>
+        <Tooltip id="tooltip-fab" title="Add">
+          <Button variant="fab" color="black" onClick={this.props.handleClick}>
+            <AddIcon />
+          </Button>
+        </Tooltip>
       </div>
     );
   }
